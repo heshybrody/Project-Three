@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Walkability Index</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body style="background-image: linear-gradient(rgb(125, 178, 122),whitesmoke);">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 jumbotron text-center" style="background-color:rgba(124, 116, 116, 0.642)">
+        <h1 style="color:white;">Walkability Index Dashboard</h1>
+        <p style="color:white;">Use the interactive charts below to explore walkability scores across the U.S.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+      <div class="panel panel-primary" style="background-color:white">
+        <div class="panel-heading" style="background-color:black">
+          <h3 class="panel-title" style="color: white">API Routes</h3>
+        </div>
+        <ol><a href="http://127.0.0.1:5000/api/full-data">
+          <b>/api/full-data</b></a> for the full JSONified dataset</ol>
+        <ol><a href="http://127.0.0.1:5000/api/demo-data">
+          <b>/api/demo-data</b></a> for selected regional variables</ol>
+        <ol><a href="http://127.0.0.1:5000/api/walkability-directory">
+          <b>/api/walkability-directory</b></a> for names of CBSA's with walkability data</ol>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="panel panel-secondary" style="background-color: transparent">
+        <div class="panel-heading">
+          <h3 class="panel-title" style="color: black">Project Description</h3>
+        </div>
+        <p style="color: black">Walkability is defined by the accessibility of amenities by foot, that includes walking and biking. 
+          Our dataset includes over 1,000 lines of data, grouping places by their Census Block Group, with information about their name, population, 
+          total land and water acreage, total number of housing units, and the lists goes on. We decided to narrow in on a few variables to analyze, including
+          total population, census block name, walkability index comprised of weighted sum of the ranked values, housing density, number of 
+          housing units, and coordinates of the census block group. These variables were used to create the following visualizations to analyze a few questions:</p>
+          <ol style="color: black">
+            <li>What variables and factors are influencing walkability?</li>
+              <ul>Is population density a factor?</ul>
+              <ul>Is location a factor?</ul>
+            <li>What areas of the U.S. are the most walkable?</li>
+              <ul>States</ul>
+              <ul>Cities</ul>
+          </ol>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5">
+      <div class="well" style="background-color: black">
+        <h5 style="color:white">Region</h5>
+        <select id="selDataset" onchange="optionChanged(this.value)"></select>
+      </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading" style="background-color:black">
+            <h3 class="panel-title">Regional Info</h3>
+          </div>
+          <div id="sample-metadata" class="panel-body"></div>
+        </div>
+      </div>
+        <div class="col-md-7">
+          <div id="bar"></div>
+        </div>
+      </div>
+          <div class="row">
+          <div class="col-md-12">
+          <h3 class="panel-title">Employment Pie Chart</h3>
+                <p>
+                  The pie chart and regional information panel details data on selected Core-Based Statistical Regions (CBSAs) with a population of over 1 million. 
+                  The panel shows the average walkability index for the CBSA, as well as geographic information such as area of water and land within the region. The 
+                  pie chart shows the employment breakdown between industries in the specified CBSA. 
+                </p>
+          </div>
+          </div>
+    <a href="https://public.tableau.com/app/profile/abraham.brody/viz/Project3visualizations/Dashboard2?publish=yes">
+      <button style="color:black">Walkability Map</button>
+    </a>
+    <div class="row">
+    <div class="col-md-auto">
+      <div class="panel-heading">
+      <h3 class="panel-title">Walkability Mapping</h3>
+      <p>Upon clicking the button above, you will see two visualizations. One map is divided by states the other one is divided up with the states with the smaller populations on the inner part of the circle, 
+        and the states with bigger populations on the outer parts. As is clearly shown there is a strong correlation between the size of a states population and its walkability 
+        index with the states with the smaller populations having a lower walkability index while the bigger the states population, the higher the walkability index is.</p>
+    </div>
+  </div>
+</div>
+      <div class="row">
+        <div class="col-md-auto">
+          <div>
+          <canvas id="pie"></canvas>
+          </div>
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <div class="row">
+            <div class="col-md-auto">
+              <div class="panel-heading">
+                <h3 class="panel-title">Walkability Bar Chart</h3>
+                <p>
+                  The bar chart above selects Core-Based Statistical Regions (CBSAs) with a population of over 1 million. 
+                  Hovering over each bar details the CBSA name and average walkability rating. The dataset gives a walkability rating to each
+                  block group within a region, so the data shown is an average of all block groups within that CBSA. We can see areas like San Juan, PR 
+                  have low average walkability, but San Jose and Los Angeles has a higher average rating. 
+                </p>
+              </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div id="bubble"></div>
+        <div class="panel-heading">
+          <h3 class="panel-title">Walkability Bubbles</h3>
+          <p>This bubble plot shows the number of houses in the US for cities with a population of 1,000,000 or larger. 
+            The bubble plot describes the number of housing units in a city compared to their population, and housing density (housing/acre). 
+            The size of the points on the bubble plot is described by how many houses there are in that city compared to how large their population is and also how many developed units there are in a area of land. 
+            You may hover over the data points on the chart to get more information regarding that data point."
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="./static/js/app.js"></script>
+  <!-- <script src="./static/js/bonus.js"></script> -->
+</body>
+
+</html>
